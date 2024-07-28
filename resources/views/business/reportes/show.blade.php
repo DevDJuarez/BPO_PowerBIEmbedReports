@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.template-horizontal')
 @section('css')
     <style>
         .btnFullScreen:hover {
@@ -32,10 +32,9 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('empresas.index') }}">Empresas</a></li>
-                        <li class="breadcrumb-item"><a
-                                href="{{ route('empresas.grupos', [Str::slug($reporte->workspace->empresa->nombre), $reporte->workspace->empresa->id, 0]) }}">Espacios
-                                de trabajos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('business.grupos.index', [Str::slug($reporte->workspace->empresa->nombre), $reporte->workspace->empresa->id]) }}">Espacios de trabajos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('business.grupos.reportes', [Str::slug($reporte->workspace->empresa->nombre), $reporte->workspace->id]) }}">Reportes</a></li>
+
                         <li class="breadcrumb-item active">Reportes</li>
                     </ol>
                 </div>
@@ -83,9 +82,9 @@
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.18.7/dist/powerbi.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var embedUrl = "{{ $embedUrl }}";
+            var embedUrl = "{{ $reporte->embedUrl }}";
             var accessToken = "{{ $accessToken }}";
-            var reportId = "{{ $reportId }}";
+            var reportId = "{{ $reporte->reportId }}";
 
             var models = window['powerbi-client'].models;
             var embedConfiguration = {

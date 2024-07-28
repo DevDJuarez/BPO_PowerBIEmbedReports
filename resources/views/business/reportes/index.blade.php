@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.template-horizontal')
 
 @section('contenido')
     <!-- start page title -->

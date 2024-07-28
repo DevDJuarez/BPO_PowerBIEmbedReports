@@ -79,7 +79,7 @@
     <script src="{{ asset('assets/js/vendor/responsive.bootstrap5.min.js') }}"></script>
     <script>
         function confirmDelete(userId) {
-            const url= "{{ url('admin/usuarios') }}"+ '/'+userId;
+            const url = "{{ url('admin/usuarios') }}" + '/' + userId;
             const deleteForm = document.getElementById('deleteForm');
             deleteForm.action = url;
 

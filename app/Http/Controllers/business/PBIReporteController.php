@@ -19,6 +19,7 @@ class PBIReporteController extends Controller
         $embedUrl = $reporte->embedUrl;
         $reportId = $reporteId;
         $nombre = $reporte->name;
-        return view('business.reportes.show', compact('nombre', 'accessToken', 'embedUrl', 'reportId', 'reporte'));
+        // dd($accessToken);
+        return view('business.reportes.show', compact( 'accessToken','reporte'));
     }
 }

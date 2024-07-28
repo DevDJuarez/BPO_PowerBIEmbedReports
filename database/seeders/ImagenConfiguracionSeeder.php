@@ -17,7 +17,7 @@ class ImagenConfiguracionSeeder extends Seeder
         ImagenConfiguracion::create([
             'pantalla' => 'LOGIN',
             'nombre' => 'BG_AUTH',
-            'path' => '/auth/bg-auth.jpg',
+            'path' => 'auth/bg-auth.jpg',
         ]);
     }
 }

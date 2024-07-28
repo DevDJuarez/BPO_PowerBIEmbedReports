@@ -16,8 +16,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('reportType');
             $table->string('name');
-            $table->string('webUrl');
-            $table->string('embedUrl');
+            $table->text('webUrl');
+            $table->text('embedUrl');
             $table->string('datasetId');
             $table->string('reportId');
             $table->uuid('workspace_id');

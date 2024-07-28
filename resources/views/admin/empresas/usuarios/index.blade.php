@@ -60,7 +60,9 @@
                                             <a class="action-icon" href="{{ route('empresas.usuarios.edit', [Str::slug($empresa->nombre), $empresa->id, $item->id]) }}">
                                                 <i class="mdi mdi-square-edit-outline"></i></a>
                                             <a class="action-icon" onclick="confirmDelete('{{ $item->id }}')">
-                                                <i class="mdi mdi-delete"></i></a>
+                                                <i class="mdi mdi-trash-can-outline"></i></a>
+                                                <a href="{{ route('empresas.usuarios.reset', $item->id) }}" class="action-icon"> <i
+                                                    class="mdi mdi-key-outline"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

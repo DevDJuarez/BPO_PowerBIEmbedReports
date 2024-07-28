@@ -3,13 +3,14 @@
 use App\Http\Controllers\admin\ConfiguracionController;
 use App\Http\Controllers\admin\EmpresaController;
 use App\Http\Controllers\admin\PBIGrupoController;
-use App\Http\Controllers\business\PBIGrupoController as BusinessPBIGrupoController;
 use App\Http\Controllers\admin\PBIReporteController;
 use App\Http\Controllers\admin\UsuarioController;
 use App\Http\Controllers\business\ReportePowerBiController;
 use App\Http\Controllers\admin\EmpresaUsuarioController;
 use App\Http\Controllers\admin\PerfilController;
+use App\Http\Controllers\business\PBIGrupoController as BusinessPBIGrupoController;
 use App\Http\Controllers\business\PBIReporteController as BusinessPBIReporteController;
+use App\Http\Controllers\business\PerfilController as BusinessPerfilController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -22,13 +23,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware([ 'admin'])->group(function () {
     Route::resource('/usuarios', UsuarioController::class);
     Route::resource('/empresas', EmpresaController::class);
 
     Route::post('/empresas/usuarios/store', [EmpresaUsuarioController::class, 'store'])->name('empresas.usuarios.store');
     Route::put('/empresas/usuarios/update/{id}', [EmpresaUsuarioController::class, 'update'])->name('empresas.usuarios.update');
     Route::delete('/empresas/usuarios/destroy/{id}', [EmpresaUsuarioController::class, 'destroy'])->name('empresas.usuarios.destroy');
+    Route::get('/empresas/usuarios/reset/{id}', [EmpresaUsuarioController::class, 'resetPassword'])->name('empresas.usuarios.reset');
+    Route::put('/empresas/usuarios/reset/store/{id}', [EmpresaUsuarioController::class, 'resetPasswordStore'])->name('empresas.usuarios.reset.store');
 
     Route::get('/empresas/{empresa}/{id}/usuarios', [EmpresaUsuarioController::class, 'index'])->name('empresas.usuarios');
     Route::get('/empresas/{empresa}/{id}/usuarios/create', [EmpresaUsuarioController::class, 'create'])->name('empresas.usuarios.create');
@@ -49,12 +52,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/configuracion/login/imagen/store', [ConfiguracionController::class,'loginImageStore'])->name('login.imagen.store');
 });
 
-Route::prefix('panel')->middleware('auth')->group(function () {
+Route::prefix('panel')->middleware(['suscriptor'])->group(function () {
     Route::get('/{empresa}/espacios-de-trabajo', [BusinessPBIGrupoController::class, 'index'])->name('business.grupos.index');
     Route::get('/{empresa}/espacios-de-trabajo/{id}/reportes', [BusinessPBIGrupoController::class, 'reportes'])->name('business.grupos.reportes');
     Route::get('/{empresa}/espacios-de-trabajo/reportes/{id}', [BusinessPBIReporteController::class, 'show'])->name('business.reportes.show');
 
-    // Route::get('/configuracion/perfil', [PerfilController::class, 'show'])->name('perfil.show');
-    // Route::post('/configuracion/perfil/data/update', [PerfilController::class, 'updateData'])->name('perfil.dataUpdate');
-    // Route::post('/configuracion/perfil/password/change', [PerfilController::class, 'updatePassword'])->name('admin.password.change');
+    Route::get('/configuracion/perfil', [BusinessPerfilController::class, 'show'])->name('business.perfil.show');
+    Route::post('/configuracion/perfil/data/update', [BusinessPerfilController::class, 'updateData'])->name('business.perfil.dataUpdate');
+    Route::post('/configuracion/perfil/password/change', [BusinessPerfilController::class, 'updatePassword'])->name('business.password.change');
 });
